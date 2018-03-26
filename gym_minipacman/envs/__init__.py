@@ -1,0 +1,1 @@
+from gym_minipacman.envs.minipacman_env import MiniPacman
