@@ -1,7 +1,13 @@
 import numpy as np
 import gym
+from gym.spaces.discrete import Discrete
+from gym.spaces import Box
 import math
+
 from gym.envs.classic_control import rendering
+import matplotlib.pyplot as plt
+plt.ion()
+plt.show()
 
 STANDARD_MAP = np.array([
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -133,9 +139,6 @@ class MiniPacman(gym.Env):
 
   #def __init__(self, mode, frame_cap=3000):
   def __init__(self):
-    #self.action_space = Discrete(len(ACTION_LOOKUP))
-    #self.observation_space = Box(low=0, high=255, shape=(screen_height, screen_width, 3))
-    self.viewer = None
     mode = 'regular'
     frame_cap = 3000
 
@@ -230,6 +233,9 @@ class MiniPacman(gym.Env):
       self.all_ghosts_terminate = False
       self.all_food_terminate = False
       self.timer_terminate = -1
+
+    self.action_space = Discrete(5)
+    self.observation_space = Box(low=0, high=255, shape=(self.height, self.width, 3))
 
   def _make_pillman(self):
     return self._make_actor(0)
@@ -469,17 +475,15 @@ class MiniPacman(gym.Env):
       if mode == 'rgb_array':
           return img
       elif mode == 'human':
-          import matplotlib.pyplot as plt
           plt.imshow(img)
-          plt.ion()
-          plt.show()
           plt.pause(.001)
 
           #if self.viewer is None:
           #    print('Viewer created')
           #    self.viewer = rendering.SimpleImageViewer()
           #self.viewer.imshow(img)
-      return self.viewer.isopen
+      #return self.viewer.isopen
+      return
 
   def close(self):
       if self.viewer is not None:
