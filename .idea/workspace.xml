@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="bef24795-7ca0-43ee-bf73-b61fb22fec6e" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/gym_minipacman/__init__.py" afterPath="$PROJECT_DIR$/gym_minipacman/__init__.py" />
-      <change beforePath="$PROJECT_DIR$/gym_minipacman/envs/__init__.py" afterPath="$PROJECT_DIR$/gym_minipacman/envs/__init__.py" />
       <change beforePath="$PROJECT_DIR$/gym_minipacman/envs/minipacman_env.py" afterPath="$PROJECT_DIR$/gym_minipacman/envs/minipacman_env.py" />
       <change beforePath="$PROJECT_DIR$/gym_minipacman/test_main.py" afterPath="$PROJECT_DIR$/gym_minipacman/test_main.py" />
     </list>
@@ -50,8 +48,8 @@
       <file leaf-file-name="minipacman_env.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/gym_minipacman/envs/minipacman_env.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="384">
-              <caret line="431" column="18" lean-forward="false" selection-start-line="431" selection-start-column="18" selection-end-line="431" selection-end-column="18" />
+            <state relative-caret-position="132">
+              <caret line="434" column="60" lean-forward="false" selection-start-line="434" selection-start-column="60" selection-end-line="434" selection-end-column="60" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -62,8 +60,8 @@
       <file leaf-file-name="test_main.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/gym_minipacman/test_main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="72">
-              <caret line="4" column="19" lean-forward="false" selection-start-line="4" selection-start-column="19" selection-end-line="4" selection-end-column="19" />
+            <state relative-caret-position="126">
+              <caret line="7" column="59" lean-forward="false" selection-start-line="7" selection-start-column="59" selection-end-line="7" selection-end-column="59" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -84,6 +82,9 @@
     <findStrings>
       <find>step(</find>
       <find>_get_ima</find>
+      <find>action_space</find>
+      <find>seed</find>
+      <find>state</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -102,10 +103,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="64" />
-    <option name="y" value="-11" />
-    <option name="width" value="1857" />
-    <option name="height" value="1092" />
+    <option name="x" value="909" />
+    <option name="y" value="80" />
+    <option name="width" value="1400" />
+    <option name="height" value="1000" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -228,7 +229,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="5" />
+      <option name="time" value="6" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -265,10 +266,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$USER_HOME$/.local/lib/python2.7/site-packages/gym/core.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="120" column="8" lean-forward="false" selection-start-line="120" selection-start-column="8" selection-end-line="120" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/gym_minipacman/test_main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="4" column="19" lean-forward="false" selection-start-line="4" selection-start-column="19" selection-end-line="4" selection-end-column="19" />
+        <state relative-caret-position="126">
+          <caret line="7" column="59" lean-forward="false" selection-start-line="7" selection-start-column="59" selection-end-line="7" selection-end-column="59" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
@@ -277,8 +286,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/gym_minipacman/envs/minipacman_env.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
-          <caret line="431" column="18" lean-forward="false" selection-start-line="431" selection-start-column="18" selection-end-line="431" selection-end-column="18" />
+        <state relative-caret-position="132">
+          <caret line="434" column="60" lean-forward="false" selection-start-line="434" selection-start-column="60" selection-end-line="434" selection-end-column="60" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>

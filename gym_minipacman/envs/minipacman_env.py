@@ -145,7 +145,7 @@ class MiniPacman(gym.Env):
     self.end_on_collect = False
     self.npills = 2
     self.pill_duration = 20
-    self.seed = 123
+    #self.seed = 123
     self.discount = 1
     self.stochasticity = 0.05
     self.obs_is_rgb = True
@@ -405,17 +405,34 @@ class MiniPacman(gym.Env):
     if self.frame_cap > 0 and self.frame >= self.frame_cap:
       self.pcontinue = 0
 
+    return self.observation()
+
   def observation(self, agent_id=0):
-    return (self.reward,
-            self.pcontinue,
-            observation_as_rgb(self.image))
+    #Note: changed order
+    #state,reward, done, info
+    #ret = (np.asarray(observation_as_rgb(self.image)),
+    #            self.reward,
+    #            self.pcontinue, None)
+    obs_rgb_np = np.asarray(observation_as_rgb(self.image))
+    print(obs_rgb_np.shape)
+    obs_rgb_np = np.swapaxes(obs_rgb_np, 0, 2)
+    print(obs_rgb_np.shape)
+    ret = (obs_rgb_np,
+           self.reward,
+           self.pcontinue, None)
+    return ret
 
 
   def reset(self):
-      self.start()
+    self.start()
+    #return np.asarray(observation_as_rgb(self.image))
+    obs_rgb_np = np.asarray(observation_as_rgb(self.image))
+    obs_rgb_np = np.swapaxes(obs_rgb_np, 0, 2)
+    return obs_rgb_np
 
   def render(self, mode='human', close=False):
-      _,_,img = self.observation()
+      img,_,_,_ = self.observation()
+      img = np.swapaxes(img,0,2)    #undo swap for rendering
       if mode == 'rgb_array':
           return img
       elif mode == 'human':
@@ -433,6 +450,13 @@ class MiniPacman(gym.Env):
       plt.close()
       #if self.viewer is not None:
       #    self.viewer.close()
+
+  # the following functions are for compatibility with the Atari-Wrappers
+  def get_action_meanings(self):
+      return {0:'UP',1:'LEFT',2:'DOWN',3:'RIGHT',4:'NOOP'}
+
+  def seed(self, seed=None):
+      self.seed = seed
 
 
 class RegularMiniPacman(MiniPacman):
