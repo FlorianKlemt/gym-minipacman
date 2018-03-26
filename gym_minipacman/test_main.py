@@ -1,8 +1,8 @@
 import gym
-from envs.minipacman_env import MiniPacman
+from envs.minipacman_env import RegularMiniPacman, AvoidMiniPacman, HuntMiniPacman, AmbushMiniPacman, RushMiniPacman
 import numpy as np
 
-mini_pacman = MiniPacman()
+mini_pacman = AvoidMiniPacman()
 mini_pacman.start()
 for i in range(0,1000):
     mini_pacman.step(mini_pacman.action_space.sample())

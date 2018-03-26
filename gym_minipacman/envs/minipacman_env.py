@@ -135,14 +135,9 @@ class MiniPacman(gym.Env):
   GHOSTS_EDIBLE = 4
   PILL = 5
   NUM_ACTIONS = 5
-  MODES = ('regular', 'avoid', 'hunt', 'ambush', 'rush')
 
-  #def __init__(self, mode, frame_cap=3000):
   def __init__(self):
-    mode = 'regular'
     frame_cap = 3000
-
-    assert mode in MiniPacman.MODES
     self.nghosts_init = 1
     self.ghost_speed_init = 0.5
     self.ghost_speed = self.ghost_speed_init
@@ -181,58 +176,7 @@ class MiniPacman(gym.Env):
     self.pcontinue = 1.
     self._init_level(1)
     self._make_image()
-    self.mode = mode
     self.timer = 0
-    if self.mode == 'regular':
-      self.step_reward = 0
-      self.food_reward = 1
-      self.big_pill_reward = 2
-      self.ghost_hunt_reward = 5
-      self.ghost_death_reward = 0
-      self.all_pill_terminate = False
-      self.all_ghosts_terminate = False
-      self.all_food_terminate = True
-      self.timer_terminate = -1
-    elif self.mode == 'avoid':
-      self.step_reward = 0.1
-      self.food_reward = -0.1
-      self.big_pill_reward = -5
-      self.ghost_hunt_reward = -10
-      self.ghost_death_reward = -20
-      self.all_pill_terminate = False
-      self.all_ghosts_terminate = False
-      self.all_food_terminate = True
-      self.timer_terminate = 128
-    elif self.mode == 'hunt':
-      self.step_reward = 0
-      self.food_reward = 0
-      self.big_pill_reward = 1
-      self.ghost_hunt_reward = 10
-      self.ghost_death_reward = -20
-      self.all_pill_terminate = False
-      self.all_ghosts_terminate = True
-      self.all_food_terminate = False
-      self.timer_terminate = -1
-    elif self.mode == 'ambush':
-      self.step_reward = 0
-      self.food_reward = -0.1
-      self.big_pill_reward = 0
-      self.ghost_hunt_reward = 10
-      self.ghost_death_reward = -20
-      self.all_pill_terminate = False
-      self.all_ghosts_terminate = True
-      self.all_food_terminate = False
-      self.timer_terminate = -1
-    elif self.mode == 'rush':
-      self.step_reward = 0
-      self.food_reward = -0.1
-      self.big_pill_reward = 10
-      self.ghost_hunt_reward = 0
-      self.ghost_death_reward = 0
-      self.all_pill_terminate = True
-      self.all_ghosts_terminate = False
-      self.all_food_terminate = False
-      self.timer_terminate = -1
 
     self.action_space = Discrete(5)
     self.observation_space = Box(low=0, high=255, shape=(self.height, self.width, 3))
@@ -486,6 +430,72 @@ class MiniPacman(gym.Env):
       return
 
   def close(self):
-      if self.viewer is not None:
-          self.viewer.close()
+      plt.close()
+      #if self.viewer is not None:
+      #    self.viewer.close()
 
+
+class RegularMiniPacman(MiniPacman):
+    def __init__(self):
+      self.step_reward = 0
+      self.food_reward = 1
+      self.big_pill_reward = 2
+      self.ghost_hunt_reward = 5
+      self.ghost_death_reward = 0
+      self.all_pill_terminate = False
+      self.all_ghosts_terminate = False
+      self.all_food_terminate = True
+      self.timer_terminate = -1
+      super(RegularMiniPacman, self).__init__()
+
+class AvoidMiniPacman(MiniPacman):
+    def __init__(self):
+      self.step_reward = 0.1
+      self.food_reward = -0.1
+      self.big_pill_reward = -5
+      self.ghost_hunt_reward = -10
+      self.ghost_death_reward = -20
+      self.all_pill_terminate = False
+      self.all_ghosts_terminate = False
+      self.all_food_terminate = True
+      self.timer_terminate = 128
+      super(AvoidMiniPacman, self).__init__()
+
+class HuntMiniPacman(MiniPacman):
+    def __init__(self):
+      self.step_reward = 0
+      self.food_reward = 0
+      self.big_pill_reward = 1
+      self.ghost_hunt_reward = 10
+      self.ghost_death_reward = -20
+      self.all_pill_terminate = False
+      self.all_ghosts_terminate = True
+      self.all_food_terminate = False
+      self.timer_terminate = -1
+      super(HuntMiniPacman, self).__init__()
+
+class AmbushMiniPacman(MiniPacman):
+    def __init__(self):
+      self.step_reward = 0
+      self.food_reward = -0.1
+      self.big_pill_reward = 0
+      self.ghost_hunt_reward = 10
+      self.ghost_death_reward = -20
+      self.all_pill_terminate = False
+      self.all_ghosts_terminate = True
+      self.all_food_terminate = False
+      self.timer_terminate = -1
+      super(AmbushMiniPacman, self).__init__()
+
+class RushMiniPacman(MiniPacman):
+    def __init__(self):
+      self.step_reward = 0
+      self.food_reward = -0.1
+      self.big_pill_reward = 10
+      self.ghost_hunt_reward = 0
+      self.ghost_death_reward = 0
+      self.all_pill_terminate = True
+      self.all_ghosts_terminate = False
+      self.all_food_terminate = False
+      self.timer_terminate = -1
+      super(RushMiniPacman, self).__init__()
