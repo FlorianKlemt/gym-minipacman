@@ -1,1 +1,2 @@
 from gym_minipacman.envs.minipacman_env import MiniPacman, RegularMiniPacman, AvoidMiniPacman, HuntMiniPacman, AmbushMiniPacman, RushMiniPacman
+from gym_minipacman.envs.pacman_simple_image_viewer import Pacman_SimpleImageViewer

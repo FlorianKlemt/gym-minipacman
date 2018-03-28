@@ -1,7 +1,7 @@
 from gym.envs.registration import register
 
 register(
-    id='RegularMiniPacman-v0',
+    id='RegularMiniPacmanNoFrameskip-v0',
     entry_point='gym_minipacman.envs:RegularMiniPacman',
 )
 

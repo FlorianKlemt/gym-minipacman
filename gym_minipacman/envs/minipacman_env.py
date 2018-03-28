@@ -3,11 +3,10 @@ import gym
 from gym.spaces.discrete import Discrete
 from gym.spaces import Box
 import math
+from gym.utils import seeding
 
-from gym.envs.classic_control import rendering
-import matplotlib.pyplot as plt
-plt.ion()
-plt.show()
+#from gym.envs.classic_control import rendering
+from gym_minipacman.envs.pacman_simple_image_viewer import Pacman_SimpleImageViewer
 
 STANDARD_MAP = np.array([
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -137,6 +136,9 @@ class MiniPacman(gym.Env):
   NUM_ACTIONS = 5
 
   def __init__(self):
+    self.viewer = None
+
+    self.seed()
     frame_cap = 3000
     self.nghosts_init = 1
     self.ghost_speed_init = 0.5
@@ -414,12 +416,10 @@ class MiniPacman(gym.Env):
     #            self.reward,
     #            self.pcontinue, None)
     obs_rgb_np = np.asarray(observation_as_rgb(self.image))
-    print(obs_rgb_np.shape)
-    obs_rgb_np = np.swapaxes(obs_rgb_np, 0, 2)
-    print(obs_rgb_np.shape)
+    info = {'episode':"default_info"}
     ret = (obs_rgb_np,
            self.reward,
-           self.pcontinue, None)
+           not self.pcontinue, info)
     return ret
 
 
@@ -427,40 +427,44 @@ class MiniPacman(gym.Env):
     self.start()
     #return np.asarray(observation_as_rgb(self.image))
     obs_rgb_np = np.asarray(observation_as_rgb(self.image))
-    obs_rgb_np = np.swapaxes(obs_rgb_np, 0, 2)
     return obs_rgb_np
 
   def render(self, mode='human', close=False):
       img,_,_,_ = self.observation()
-      img = np.swapaxes(img,0,2)    #undo swap for rendering
+      img *= 255
+      img = img.astype('uint8')
       if mode == 'rgb_array':
           return img
       elif mode == 'human':
-          plt.imshow(img)
-          plt.pause(.001)
-
-          #if self.viewer is None:
-          #    print('Viewer created')
-          #    self.viewer = rendering.SimpleImageViewer()
-          #self.viewer.imshow(img)
-      #return self.viewer.isopen
-      return
+          if self.viewer is None:
+              print('Viewer created')
+              self.viewer = Pacman_SimpleImageViewer()
+          self.viewer.imshow(img)
+      return self.viewer.isopen
 
   def close(self):
-      plt.close()
-      #if self.viewer is not None:
-      #    self.viewer.close()
+      if self.viewer is not None:
+          self.viewer.close()
 
   # the following functions are for compatibility with the Atari-Wrappers
   def get_action_meanings(self):
-      return {0:'UP',1:'LEFT',2:'DOWN',3:'RIGHT',4:'NOOP'}
+      return {0:'NOOP',1:'RIGHT',2:'UP',3:'LEFT',4:'DOWN'}
 
-  def seed(self, seed=None):
-      self.seed = seed
+  def seed(self, seed=123):
+      self.np_random, seed = seeding.np_random(seed)
 
+
+class ALE():
+    def __init__(self,nr_lives=1):
+        self.nr_lives = nr_lives
+
+    def lives(self):
+        return self.nr_lives
 
 class RegularMiniPacman(MiniPacman):
     def __init__(self):
+      self.ale = ALE(1)
+
       self.step_reward = 0
       self.food_reward = 1
       self.big_pill_reward = 2
