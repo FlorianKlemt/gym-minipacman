@@ -19,6 +19,8 @@ class Pacman_SimpleImageViewer(object):
         self.display = display
         self.scale = scale
     def imshow(self, arr):
+        #import time
+        #time.sleep(1)
         height, width, _channels = arr.shape
         if self.window is None:
             self.window = pyglet.window.Window(width=self.scale*width*4, height=self.scale*height*4, display=self.display, vsync=False, resizable=True)

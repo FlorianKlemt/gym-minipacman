@@ -275,6 +275,7 @@ class MiniPacman(gym.Env):
   def _die_by_ghost(self):
     self.reward += self.ghost_death_reward
     self.pcontinue = 0
+    self.ale.nr_lives = 0
 
   def _move_pillman(self, action):
     """Moves Pillman following the action in the proto `action_proto`."""
@@ -357,6 +358,7 @@ class MiniPacman(gym.Env):
     self._init_level(1)
     self.reward = 0
     self.pcontinue = 1
+    self.ale.nr_lives = 1
     self.ghost_speed = self.ghost_speed_init
     return self._make_image(), self.reward, self.pcontinue
 
@@ -406,6 +408,7 @@ class MiniPacman(gym.Env):
     # Check if framecap reached
     if self.frame_cap > 0 and self.frame >= self.frame_cap:
       self.pcontinue = 0
+      self.ale.nr_lives = 0
 
     return self.observation()
 
