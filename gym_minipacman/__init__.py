@@ -6,21 +6,21 @@ register(
 )
 
 register(
-    id='AvoidMiniPacman-v0',
+    id='AvoidMiniPacmanNoFrameskip-v0',
     entry_point='gym_minipacman.envs:AvoidMiniPacman',
 )
 
 register(
-    id='HuntMiniPacman-v0',
+    id='HuntMiniPacmanNoFrameskip-v0',
     entry_point='gym_minipacman.envs:HuntMiniPacman',
 )
 
 register(
-    id='AmbushMiniPacman-v0',
+    id='AmbushMiniPacmanNoFrameskip-v0',
     entry_point='gym_minipacman.envs:AmbushMiniPacman',
 )
 
 register(
-    id='RushMiniPacman-v0',
+    id='RushMiniPacmanNoFrameskip-v0',
     entry_point='gym_minipacman.envs:RushMiniPacman',
 )

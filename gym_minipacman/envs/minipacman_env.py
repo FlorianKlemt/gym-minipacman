@@ -467,7 +467,6 @@ class ALE():
 class RegularMiniPacman(MiniPacman):
     def __init__(self):
       self.ale = ALE(1)
-
       self.step_reward = 0
       self.food_reward = 1
       self.big_pill_reward = 2
@@ -481,6 +480,7 @@ class RegularMiniPacman(MiniPacman):
 
 class AvoidMiniPacman(MiniPacman):
     def __init__(self):
+      self.ale = ALE(1)
       self.step_reward = 0.1
       self.food_reward = -0.1
       self.big_pill_reward = -5
@@ -494,6 +494,7 @@ class AvoidMiniPacman(MiniPacman):
 
 class HuntMiniPacman(MiniPacman):
     def __init__(self):
+      self.ale = ALE(1)
       self.step_reward = 0
       self.food_reward = 0
       self.big_pill_reward = 1
@@ -507,6 +508,7 @@ class HuntMiniPacman(MiniPacman):
 
 class AmbushMiniPacman(MiniPacman):
     def __init__(self):
+      self.ale = ALE(1)
       self.step_reward = 0
       self.food_reward = -0.1
       self.big_pill_reward = 0
@@ -520,6 +522,7 @@ class AmbushMiniPacman(MiniPacman):
 
 class RushMiniPacman(MiniPacman):
     def __init__(self):
+      self.ale = ALE(1)
       self.step_reward = 0
       self.food_reward = -0.1
       self.big_pill_reward = 10
