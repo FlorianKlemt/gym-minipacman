@@ -4,8 +4,8 @@ from gym.spaces.discrete import Discrete
 from gym.spaces import Box
 import math
 from gym.utils import seeding
+import time
 import torch
-
 #from gym.envs.classic_control import rendering
 from gym_minipacman.envs.pacman_simple_image_viewer import Pacman_SimpleImageViewer
 
@@ -170,9 +170,7 @@ class MiniPacman(gym.Env):
         power=0
     )
     self.nplanes = 6
-    self.image = np.zeros(
-        shape=(self.height, self.width, self.nplanes), dtype=np.float32)
-    self.color_image = np.zeros(shape=(3, self.height, self.width),
+    self.color_image = np.zeros(shape=(self.height, self.width, 3),
                                 dtype=np.float32)
     self.frame = 0
     self.reward = 0.
@@ -182,7 +180,8 @@ class MiniPacman(gym.Env):
     self.timer = 0
 
     self.action_space = Discrete(5)
-    self.observation_space = Box(low=0, high=255, shape=(self.height, self.width, 3))
+    self.observation_space = Box(low=0, high=255, shape=(self.height, self.width, 3), dtype=np.uint8)
+
 
   def _make_pillman(self):
     return self._make_actor(0)
@@ -340,18 +339,36 @@ class MiniPacman(gym.Env):
 
   def _make_image(self):
     """Represents world in a `height x width x 6` `Tensor`."""
-    self.image.fill(0)
-    self.image[:, :, MiniPacman.WALLS] = self.walls
-    self.image[:, :, MiniPacman.FOOD] = self.world_state['food']
-    self.image[self.world_state['pillman']['pos'][0], self.world_state['pillman']['pos'][1],
-               MiniPacman.PILLMAN] = 1
+
+    self.color_walls = [1, 1, 1]  # 0
+    self.color_food = [0, 0, 1]  # 1
+    self.color_pillman = [0, 1, 0]  # 2
+    self.color_ground = [0, 0, 0]
+    self.color_pill = [0, 1, 1]  # 5
+
+    for (x, y), value in np.ndenumerate(self.walls):
+        if self.walls[x, y] == 1:
+            self.color_image[x, y] = self.color_walls
+        elif self.world_state['food'][x, y] == 1:
+            self.color_image[x, y] = self.color_food
+        else:
+            self.color_image[x, y] = self.color_ground
+
+    x, y = self.world_state['pillman']['pos']
+    self.color_image[x, y] = self.color_pillman
+
     for ghost in self.world_state['ghosts']:
-      edibility = self.world_state['power'] / float(self.pill_duration)
-      self.image[ghost['pos'][0], ghost['pos'][1], MiniPacman.GHOSTS] = 1. - edibility
-      self.image[ghost['pos'][0], ghost['pos'][1], MiniPacman.GHOSTS_EDIBLE] = edibility
+        edibility = self.world_state['power'] / float(self.pill_duration)
+        g = 1. - edibility
+        ge = edibility
+        x, y = ghost['pos']
+        self.color_image[x, y] = [g + ge, ge, 0]
+
     for pill in self.world_state['pills']:
-      self.image[pill['pos'][0], pill['pos'][1], MiniPacman.PILL] = 1
-    return self.image
+        x, y = pill['pos']
+        self.color_image[x, y] = self.color_pill
+
+    return self.color_image
 
   def start(self):
     """Starts a new episode."""
@@ -365,6 +382,8 @@ class MiniPacman(gym.Env):
 
   def step(self, action):
     """Advances environment one time-step following the given action."""
+    #start = time.time()
+
     self.frame += 1
     pillman = self.world_state['pillman']
     self.pcontinue = self.discount
@@ -402,7 +421,14 @@ class MiniPacman(gym.Env):
             self._kill_ghost(i)
             # assume you can only eat one ghost per turn:
             break
+
+    #end = time.time()
+    #print("step moved ghost and pillman", end - start)
+
+    #start = time.time()
     self._make_image()
+    #end = time.time()
+    #print("step create observation", end - start)
 
     # Check if level over
     if self.timer == self.timer_terminate:
@@ -418,22 +444,15 @@ class MiniPacman(gym.Env):
   def observation(self, agent_id=0):
     #Note: changed order
     #state,reward, done, info
-    #ret = (np.asarray(observation_as_rgb(self.image)),
-    #            self.reward,
-    #            self.pcontinue, None)
-    obs_rgb_np = np.asarray(observation_as_rgb(self.image))
     info = {'episode':"default_info"}
-    ret = (obs_rgb_np,
+    ret = (self.color_image,
            self.reward,
            not self.pcontinue, info)
     return ret
 
-
   def reset(self):
     self.start()
-    #return np.asarray(observation_as_rgb(self.image))
-    obs_rgb_np = np.asarray(observation_as_rgb(self.image))
-    return obs_rgb_np
+    return self.color_image
 
   def render(self, mode='human', close=False):
       img,_,_,_ = self.observation()

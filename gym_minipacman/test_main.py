@@ -1,19 +1,22 @@
 import gym
 import gym_minipacman
 from envs.minipacman_env import RegularMiniPacman, AvoidMiniPacman, HuntMiniPacman, AmbushMiniPacman, RushMiniPacman
-import numpy as np
 import time
-
+from time import sleep
 
 def env_messure_random_sample(env):
     start = time.time()
-    for i in range(0, 1000):
-        a = env.step(env.action_space.sample())
+    time_steps = 5000
+    for i in range(0, time_steps):
+        image, reward, done, _ = env.step(env.action_space.sample())
         # print(a)
         # if i%10==0:
-        #    mini_pacman.render('human')
+        #env.render('human')
+        #sleep(0.01)
+        if done:
+            env.reset()
     end = time.time()
-    print("time for 1000 steps", end - start)
+    print("time for ", time_steps, " steps", end - start)
 
 print("\nRegular MiniPacman")
 start = time.time()
