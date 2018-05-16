@@ -179,6 +179,7 @@ class MiniPacman(gym.Env):
     self._make_image()
     self.timer = 0
 
+    self.reward_bins = [self.step_reward, self.food_reward, self.big_pill_reward, self.ghost_hunt_reward, self.ghost_death_reward]
     self.action_space = Discrete(5)
     self.observation_space = Box(low=0, high=255, shape=(self.height, self.width, 3), dtype=np.uint8)
 
@@ -489,11 +490,11 @@ class ALE():
 class RegularMiniPacman(MiniPacman):
     def __init__(self):
       self.ale = ALE(1)
-      self.step_reward = 0
-      self.food_reward = 1
-      self.big_pill_reward = 2
-      self.ghost_hunt_reward = 5
-      self.ghost_death_reward = 0
+      self.step_reward = 0.
+      self.food_reward = 1.
+      self.big_pill_reward = 2.
+      self.ghost_hunt_reward = 5.
+      self.ghost_death_reward = 0.
       self.all_pill_terminate = False
       self.all_ghosts_terminate = False
       self.all_food_terminate = True
@@ -505,9 +506,9 @@ class AvoidMiniPacman(MiniPacman):
       self.ale = ALE(1)
       self.step_reward = 0.1
       self.food_reward = -0.1
-      self.big_pill_reward = -5
-      self.ghost_hunt_reward = -10
-      self.ghost_death_reward = -20
+      self.big_pill_reward = -5.
+      self.ghost_hunt_reward = -10.
+      self.ghost_death_reward = -20.
       self.all_pill_terminate = False
       self.all_ghosts_terminate = False
       self.all_food_terminate = True
@@ -517,11 +518,11 @@ class AvoidMiniPacman(MiniPacman):
 class HuntMiniPacman(MiniPacman):
     def __init__(self):
       self.ale = ALE(1)
-      self.step_reward = 0
-      self.food_reward = 0
-      self.big_pill_reward = 1
-      self.ghost_hunt_reward = 10
-      self.ghost_death_reward = -20
+      self.step_reward = 0.
+      self.food_reward = 0.
+      self.big_pill_reward = 1.
+      self.ghost_hunt_reward = 10.
+      self.ghost_death_reward = -20.
       self.all_pill_terminate = False
       self.all_ghosts_terminate = True
       self.all_food_terminate = False
@@ -531,11 +532,11 @@ class HuntMiniPacman(MiniPacman):
 class AmbushMiniPacman(MiniPacman):
     def __init__(self):
       self.ale = ALE(1)
-      self.step_reward = 0
+      self.step_reward = 0.
       self.food_reward = -0.1
-      self.big_pill_reward = 0
-      self.ghost_hunt_reward = 10
-      self.ghost_death_reward = -20
+      self.big_pill_reward = 0.
+      self.ghost_hunt_reward = 10.
+      self.ghost_death_reward = -20.
       self.all_pill_terminate = False
       self.all_ghosts_terminate = True
       self.all_food_terminate = False
@@ -545,11 +546,11 @@ class AmbushMiniPacman(MiniPacman):
 class RushMiniPacman(MiniPacman):
     def __init__(self):
       self.ale = ALE(1)
-      self.step_reward = 0
+      self.step_reward = 0.
       self.food_reward = -0.1
-      self.big_pill_reward = 10
-      self.ghost_hunt_reward = 0
-      self.ghost_death_reward = 0
+      self.big_pill_reward = 10.
+      self.ghost_hunt_reward = 0.
+      self.ghost_death_reward = 0.
       self.all_pill_terminate = True
       self.all_ghosts_terminate = False
       self.all_food_terminate = False

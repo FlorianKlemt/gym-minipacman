@@ -19,10 +19,6 @@ class Pacman_SimpleImageViewer(object):
         self.display = display
         self.scale = scale
     def imshow(self, arr):
-        from pyglet.gl import window	#importing here instead of outside this method allows minipacman to run without a display (eg. on a server)
-
-        #import time
-        #time.sleep(1)
         height, width, _channels = arr.shape
         if self.window is None:
             self.window = pyglet.window.Window(width=self.scale*width*4, height=self.scale*height*4, display=self.display, vsync=False, resizable=True)
