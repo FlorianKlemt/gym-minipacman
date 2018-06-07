@@ -341,8 +341,11 @@ class MiniPacman(gym.Env):
     self.color_walls = [1, 1, 1]  # 0
     self.color_food = [0, 0, 1]  # 1
     self.color_pillman = [0, 1, 0]  # 2
-    self.color_ground = [0, 0, 0]
+    self.color_ground = [0, 0, 0] #3
     self.color_pill = [0, 1, 1]  # 5
+
+    self.color_ghost = [1, 0, 0]  # 4
+    self.color_ghost_edible = [1, 1, 0]  # 6
 
     for (x, y), value in np.ndenumerate(self.walls):
         if self.walls[x, y] == 1:
@@ -356,11 +359,18 @@ class MiniPacman(gym.Env):
     self.color_image[x, y] = self.color_pillman
 
     for ghost in self.world_state['ghosts']:
-        edibility = self.world_state['power'] / float(self.pill_duration)
-        g = 1. - edibility
-        ge = edibility
+        #edibility = self.world_state['power'] / float(self.pill_duration)
+        #g = 1. - edibility
+        #ge = edibility
         x, y = ghost['pos']
-        self.color_image[x, y] = [g + ge, ge, 0]
+        #self.color_image[x, y] = [g + ge, ge, 0]
+        if self.world_state['power'] > 0:
+            self.color_image[x, y] = self.color_ghost_edible
+        else:
+            self.color_image[x, y] = self.color_ghost
+
+    for i in range(min(self.world_state['power'], self.width)):
+        self.color_image[self.height-1, i] = self.color_ghost_edible
 
     for pill in self.world_state['pills']:
         x, y = pill['pos']
