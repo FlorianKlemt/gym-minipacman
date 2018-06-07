@@ -4,9 +4,6 @@ from gym.spaces.discrete import Discrete
 from gym.spaces import Box
 import math
 from gym.utils import seeding
-import time
-import torch
-#from gym.envs.classic_control import rendering
 from gym_minipacman.envs.pacman_simple_image_viewer import Pacman_SimpleImageViewer
 
 STANDARD_MAP = np.array([
@@ -394,8 +391,6 @@ class MiniPacman(gym.Env):
     self.world_state['power'] = max(0, self.world_state['power']-1)
 
     # move pillman
-    if isinstance(action,torch.cuda.LongTensor):  #this solution should be a temporary band-aid, why can this be a 1x1 Long-tensor instead of an int?
-      action = action[0][0]
     self._move_pillman(action)
 
     for i, ghost in enumerate(self.world_state['ghosts']):
@@ -526,7 +521,7 @@ class HuntMiniPacman(MiniPacman):
       self.all_pill_terminate = False
       self.all_ghosts_terminate = True
       self.all_food_terminate = False
-      self.timer_terminate = -1
+      self.timer_terminate = 80
       super(HuntMiniPacman, self).__init__()
 
 class AmbushMiniPacman(MiniPacman):
@@ -540,7 +535,7 @@ class AmbushMiniPacman(MiniPacman):
       self.all_pill_terminate = False
       self.all_ghosts_terminate = True
       self.all_food_terminate = False
-      self.timer_terminate = -1
+      self.timer_terminate = 80
       super(AmbushMiniPacman, self).__init__()
 
 class RushMiniPacman(MiniPacman):
