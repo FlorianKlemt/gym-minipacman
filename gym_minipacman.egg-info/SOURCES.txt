@@ -1,6 +1,0 @@
-README.md
-gym_minipacman.egg-info/PKG-INFO
-gym_minipacman.egg-info/SOURCES.txt
-gym_minipacman.egg-info/dependency_links.txt
-gym_minipacman.egg-info/requires.txt
-gym_minipacman.egg-info/top_level.txt
